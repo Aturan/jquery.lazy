@@ -2,6 +2,7 @@
 一个延迟加载数据(image、HTML等等)的jQuery插件
 
 
+
 ##如何工作
 当指定元素出现在用户视窗范围内时，则开始加载数据
 
@@ -19,14 +20,18 @@ $.lazy是底层办法
 (*基于一致性，$.fn.lazy不返回Promise*)
 
 
+
 ##如何使用
+
 
 
 ##测试用例
 
 
+
 ##参考链接
 * DataLazyload: http://docs.kissyui.com/docs/html/api/component/datalazyload/
+
 
 
 ##License
