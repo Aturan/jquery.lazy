@@ -3,11 +3,20 @@
 
 
 ##如何工作
-当指定元素在用户可视范围内时加载数据，成功时会触发`load.lazy`事件，失败会触发`error.lazy`事件
+当指定元素出现在用户视窗范围内时，则开始加载数据
 
-包含两个方法：`$.lazy`、`$.fn.lazy`
-* $.lazy会返回Promise(*基于一致性，$.fn.lazy不返回Promise*)
-* $.fn.lazy提供了简单的延迟加载图片、HTML的能力
+成功时会触发`load.lazy`事件，失败会触发`error.lazy`事件
+
+对于要加载的数据类型，插件会自动判断是加载image还是ajax，无需用户自行判断
+
+##插件方法
+#####$.lazy
+$.lazy是底层办法
+返回:`Promise`
+
+#####$.lazy
+* `$.lazy`: 提供了简单的延迟加载图片、HTML的能力
+(*基于一致性，$.fn.lazy不返回Promise*)
 
 
 ##如何使用
