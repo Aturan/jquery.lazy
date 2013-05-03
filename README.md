@@ -1,5 +1,5 @@
 #jquery.lazy
-一个延迟加载数据(image、HTML等等)的jQuery插件
+一个延迟加载数据(例如image、HTML)的jQuery插件
 
 
 
