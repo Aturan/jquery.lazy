@@ -1,8 +1,8 @@
 /**
  * jQuery Plugin
  * 目标DOM在指定可视范围内时加载数据
- * DataLazyload: {@link http://docs.kissyui.com/docs/html/api/component/datalazyload/}
- * 成功时会触发loadsuccess事件，失败会触发loaderror事件
+ * DataLazyLoad: {@link http://docs.kissyui.com/docs/html/api/component/datalazyload/}
+ * 成功时会触发load.lazy事件，失败会触发error.lazy事件
  * $.lazy会返回Promise，以实现回调
  * (基于一致性，$.fn.lazy不返回Promise)
  * $.fn.lazy提供了简单的延迟加载图片、HTML的能力
@@ -15,10 +15,7 @@
 
 	$.fn.lazy = function() {
 
-	}
-
-
-
+	};
 })(jQuery);
 
 define(function (require, exports, module) {
