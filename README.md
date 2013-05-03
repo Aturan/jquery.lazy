@@ -14,8 +14,8 @@
 $.lazy是底层办法
 返回:`Promise`
 
-#####$.lazy
-* `$.lazy`: 提供了简单的延迟加载图片、HTML的能力
+#####$.fn.lazy
+* `$.fn.lazy`: 提供了简单的延迟加载图片、HTML的能力
 (*基于一致性，$.fn.lazy不返回Promise*)
 
 
