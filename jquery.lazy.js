@@ -4,7 +4,7 @@
  * DataLazyload: {@link http://docs.kissyui.com/docs/html/api/component/datalazyload/}
  * 成功时会触发loadsuccess事件，失败会触发loaderror事件
  * $.lazy会返回Promise，以实现回调
- * (基于一致性，$.fn.lazy不返回Promise，不提供回调)
+ * (基于一致性，$.fn.lazy不返回Promise)
  * $.fn.lazy提供了简单的延迟加载图片、HTML的能力
  */
 (function($) {
