@@ -11,13 +11,14 @@
 对于要加载的数据类型，插件会自动判断是加载image还是ajax，无需用户自行判断
 
 ##插件方法
-#####$.lazy
+###$.lazy
 $.lazy是底层办法
-返回:`Promise`
 
-#####$.fn.lazy
-* `$.fn.lazy`: 提供了简单的延迟加载图片、HTML的能力
-(*基于一致性，$.fn.lazy不返回Promise*)
+*返回值:* `Promise`
+
+###$.fn.lazy
+`$.fn.lazy`提供了简单的延迟加载图片、HTML的能力
+**(基于一致性，$.fn.lazy不返回Promise)**
 
 
 
