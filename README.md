@@ -1,23 +1,20 @@
 #jquery.lazy
-一个延迟加载数据(image、HTML等等)的jQuery插件
-
-
+一个延迟请求/获取数据数据(image、HTML、JSON等等)的jQuery插件
 
 ##如何工作
 当指定元素出现在用户视窗范围内时，则开始加载数据
 
-成功时会触发`load.lazy`事件，失败会触发`error.lazy`事件
+成功时会触发`load`事件，失败会触发`error`事件
 
-对于要加载的数据类型，插件会自动判断是加载image还是ajax，无需用户自行判断
+对于要加载的数据类型，插件会通过参数自动判断加载类型
 
 ##插件方法
-#####$.lazy
-$.lazy是底层办法
-返回:`Promise`
+#####`Promise` $.lazy
+是底层的方法，实现了延迟数据加载，通过返回Promise
 
-#####$.fn.lazy
+#####`jQuery` $.fn.lazy
 * `$.fn.lazy`: 提供了简单的延迟加载图片、HTML的能力
-(*基于一致性，$.fn.lazy不返回Promise*)
+(*基于一致性，`$.fn.lazy`不返回`Promise`*)
 
 
 
@@ -30,7 +27,7 @@ $.lazy是底层办法
 
 
 ##参考链接
-* DataLazyload: http://docs.kissyui.com/docs/html/api/component/datalazyload/
+* dataLazyload: http://docs.kissyui.com/docs/html/api/component/datalazyload/
 
 
 
