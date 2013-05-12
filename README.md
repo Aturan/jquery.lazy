@@ -36,6 +36,8 @@ $.lazy(`Element`, `HTMLScriptElement`)
 
 ##测试用例
 
+##兼容性
+
 
 
 ##参考链接
