@@ -13,7 +13,7 @@
 底层的方法，实现了延迟数据加载，返回Promise
 
 方法列表:
-$.lazy(Element, `callback`)
+$.lazy(`Element`, `callback`)
 
 $.lazy(`Element`, `url`)
 
