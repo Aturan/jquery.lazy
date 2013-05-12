@@ -14,7 +14,7 @@
 
 #####`jQuery` $.fn.lazy
 * `$.fn.lazy`: 提供了简单的延迟加载图片、HTML的能力
-(*基于一致性，`$.fn.lazy`不返回`Promise`*)
+*(基于一致性，`$.fn.lazy`不返回`Promise`)*
 
 
 
