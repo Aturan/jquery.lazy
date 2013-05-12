@@ -10,7 +10,18 @@
 
 ##插件方法
 #####`Promise` $.lazy
-是底层的方法，实现了延迟数据加载，通过返回Promise
+底层的方法，实现了延迟数据加载，返回Promise
+
+方法列表:
+$.lazy(Element, `callback`)
+
+$.lazy(`Element`, `url`)
+
+$.lazy(`Element`, `HTMLImageElement`)
+
+$.lazy(`Element`, `HTMLTextAreaElement`)
+
+$.lazy(`Element`, `HTMLScriptElement`)
 
 #####`jQuery` $.fn.lazy
 * `$.fn.lazy`: 提供了简单的延迟加载图片、HTML的能力

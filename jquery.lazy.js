@@ -1,11 +1,10 @@
 /**
- * jQuery Plugin
- * 目标DOM在指定可视范围内时加载数据
- * DataLazyLoad: {@link http://docs.kissyui.com/docs/html/api/component/datalazyload/}
- * 成功时会触发load.lazy事件，失败会触发error.lazy事件
- * $.lazy会返回Promise，以实现回调
- * (基于一致性，$.fn.lazy不返回Promise)
- * $.fn.lazy提供了简单的延迟加载图片、HTML的能力
+ * 参数对象/数据类型对应表：
+ * HTMLImageElement: image,
+ * url: remote data: html/json/xml, etc.
+ * textarea: html
+ * script: html
+ *
  */
 (function($) {
   "use strict";
