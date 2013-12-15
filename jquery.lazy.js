@@ -8,12 +8,89 @@
  */
 (function($) {
   "use strict";
-	$.lazy = function() {
+
+	var lazyLoadList = [];
+
+	var processor = function() {
+
+	};
+	/**
+	 * @param {jQuery} $element
+	 * @param {Object} [options]
+	 * @param {String} options.type 请求资源类型
+	 * @param {String|Function} options.res 要请求的资源URL/内容
+	 * @param {Object|Number} options.offset 响应区域偏移范围
+	 */
+	var lazyload = function($element, options) {
+		options || (options = {});
+		if (options.type === 'image') {
+
+		}
+		else if (options.type === 'html') {
+
+		}
+		else if (options.type === 'url') {
+
+		}
+	};
+
+	var destroyBind = function(element) {
 
 	};
 
-	$.fn.lazy = function() {
+	/**
+	 * @param func
+	 * @param wait
+	 * @param {T} [context]
+	 * @returns {Function}
+	 */
+	var throttle = function(func, wait, context) {
+		var result;
+		var timeout = null;
+		var previous = 0;
 
+		return function() {
+			var now = new Date();
+			var remaining = wait - (now-previous);
+			context || (context = this);
+			if (remaining <= 0) {
+				clearTimeout(timeout);
+				timeout = null;
+				previous = now;
+				result = func.apply(context, arguments);
+			}
+			return result;
+		};
+	};
+
+	/**
+	 * @return {Object}
+	 */
+	var getCurrentArea = function (offsetTop, offsetBottom) {
+		var $window = $(window);
+		var top = $window.scrollTop();
+		return {
+			top: top - (offsetTop || 0),
+			bottom: top + $window.height() + (offsetBottom || 0)
+		};
+	};
+
+	//初始化监听
+	$(window).on('scroll.__lazy', throttle(processor, 100));
+
+
+	$.fn.lazy = function(options) {
+		if (options === 'destroy') {
+			this.each(function() {
+				destroyBind(this);
+			});
+		}
+		else {
+			this.each(function() {
+				lazyload(this, options);
+			});
+		}
+		return this;
 	};
 })(jQuery);
 
@@ -24,59 +101,10 @@ define(function (require, exports, module) {
 	var _ = require('_');
 
 
-	var adjustPosition = {
-		stretchCenter: function(image, container) {
-			var posType = ['relative', 'absolute', 'fixed'];
-			if (_.indexOf(posType, container.css('position')) == -1) {
-				container.css('position', 'relative');
-			}
-
-			var wrapSize = [container.width(), container.height()];
-			var imgSize = [image.width(), image.height()];
-
-			if (imgSize[0]/wrapSize[0] > imgSize[1]/wrapSize[1]) {
-				image.height(wrapSize[1]);
-				imgSize[0] = image.width();
-				imgSize[1] = wrapSize[1];
-			}
-			else {
-				image.width(wrapSize[0]);
-				imgSize[0] = wrapSize[0];
-				imgSize[1] = image.height();
-			}
-
-			image.css('position', 'absolute');
-			image.css('left', (wrapSize[0] - imgSize[0])/2);
-			image.css('top', (wrapSize[1] - imgSize[1])/2);
-		}
-	};
-
-	exports.POSITION_STRETCH_CENTER = 'stretchCenter';
-
-
-	/**
-	 * 对图片位置进行调整，
-	 * @param {jQuery} element img元素对象
-	 * @param {String} positionType 要使用的位置类型
-	 * @param {jQuery} [container] 图片容器元素，默认使用image.parent
-	 */
-	exports.adjustPosition = function(element, positionType, container) {
-		container || (container = element.parent());
-		adjustPosition[positionType](element, container);
-	};
-
-
 	//等待lazyLoad的image对象列表
 	var lazyLoadList = [];
 	//默认添加到的列表标签
 	var DEFAULT_LIST_LABEL = 'default';
-
-	//初始化lazyLoad，只执行一次
-	function initLazyLoad() {
-		initLazyLoad.inited = true;
-		$(window).on('scroll.moImage', _.throttle(scrollHandle, 100));
-		$(window).on('scroll.moImage', _.throttle(updateOffset, 1000));
-	}
 
 	function updateOffset() {
 		_.each(lazyLoadList, function(value) {
@@ -102,17 +130,7 @@ define(function (require, exports, module) {
 		lazyLoadList = _.compact(lazyLoadList);
 	}
 
-	/**
-	 * @return {Object}
-	 */
-	function getCurrentArea() {
-		var _window = $(window);
-		var top = _window.scrollTop();
-		return {
-			top: top - 150,
-			bottom: top + _window.height() + 200
-		};
-	}
+
 
 	/**
 	 * @param {jQuery} image

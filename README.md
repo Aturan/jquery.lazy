@@ -27,23 +27,3 @@ $.lazy(`Element`, `HTMLScriptElement`)
 `$.fn.lazy`提供了简单的延迟加载图片、HTML的能力
 
 **(基于一致性，`$.fn.lazy`不返回`Promise`)**
-
-
-
-##如何使用
-
-
-
-##测试用例
-
-##兼容性
-
-
-
-##参考链接
-* dataLazyload: http://docs.kissyui.com/docs/html/api/component/datalazyload/
-
-
-
-##License
-MIT
