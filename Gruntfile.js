@@ -3,7 +3,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		uglify: {
-			jquery: {
+			lazy: {
 				src: 'jquery.lazy.js',
 				dest: 'jquery.lazy.min.js'
 			}
