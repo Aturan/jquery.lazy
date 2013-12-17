@@ -15,7 +15,7 @@
 
 				if (offset.top + $element.height() > area.top && offset.top < area.bottom) {
 					$element.removeData('offset.lazy');
-					lazyLoadList[i] = null;
+					options.once && (lazyLoadList[i] = null);
 					if (options.type == 'image') {
 						setTimeout(function() {
 							loadImage($element, options);
@@ -34,7 +34,7 @@
 				}
 			}
 			catch (e) {
-				lazyLoadList[i] = null;
+
 			}
 		}
 	};
@@ -99,6 +99,7 @@
 	 * @param {jQuery} $element
 	 * @param {Object} options
 	 * @param {String} options.type 请求资源类型
+	 * @param {Boolean} options.once 是否只执行一次
 	 * @param {String} options.onLoad 加载成功回调
 	 * @param {String} options.onError 加载失败回调
 	 * @param {String|Function} options.res 要请求的资源
