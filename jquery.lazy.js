@@ -186,8 +186,8 @@
 	};
 
 	//初始化监听
-	$(window).on('scroll.__lazy', throttle(processor, 100));
 	$(window).on('scroll.__lazy', throttle(updateOffset, 1000));
+	$(window).on('scroll.__lazy', throttle(processor, 100));
 
 
 	$.fn.lazy = function(options) {
@@ -200,6 +200,7 @@
 			this.each(function() {
 				lazyload($(this), options);
 			});
+			$(window).trigger('scroll.__lazy');
 		}
 		return this;
 	};
