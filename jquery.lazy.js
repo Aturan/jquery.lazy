@@ -153,7 +153,7 @@
 			var item = lazyLoadList[i];
 			if (item && item[0].get(0) == $element.get(0)) {
 				lazyLoadList.splice(i, 1);
-				continue;
+				return;
 			}
 		}
 	};
