@@ -29,6 +29,7 @@
 					else {
 						setTimeout(function() {
 							options.onLoad(options.res());
+							$(window).trigger('scroll.__lazy');
 						}, 0);
 					}
 				}
@@ -51,9 +52,11 @@
 		$image.one({
 			load: function(e) {
 				options.onLoad($image, options, e);
+				$(window).trigger('scroll.__lazy');
 			},
 			error: function(e) {
 				options.onError($image, options, e);
+				$(window).trigger('scroll.__lazy');
 			}
 		});
 
@@ -85,6 +88,9 @@
 			})
 			.fail(function(jqXHR) {
 				options.onError($element, jqXHR, options);
+			})
+			.always(function() {
+				$(window).trigger('scroll.__lazy');
 			});
 	};
 
@@ -132,6 +138,10 @@
 
 		options.onLoad || (options.onLoad = $.noop);
 		options.onError || (options.onError = $.noop);
+
+		if (options.type == 'image') {
+			options.once = true;
+		}
 
 		lazyLoadList.push([$element, options]);
 	};
