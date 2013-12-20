@@ -136,8 +136,8 @@
 
 		$element.data('offset.lazy', options.offset($element));
 
-		options.onLoad || (options.onLoad = $.noop);
-		options.onError || (options.onError = $.noop);
+		options.onLoad || (options.onLoad = function() {});
+		options.onError || (options.onError = function() {});
 
 		if (options.type == 'image') {
 			options.once = true;
