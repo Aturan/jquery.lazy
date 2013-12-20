@@ -28,7 +28,7 @@
 					}
 					else {
 						setTimeout(function() {
-							options.onLoad(options.res());
+							options.onLoad(options.res($element));
 							$(window).trigger('scroll.__lazy');
 						}, 0);
 					}
@@ -47,7 +47,7 @@
 	 * @private
 	 */
 	var loadImage = function($image, options) {
-		var src = options.res();
+		var src = options.res($image);
 
 		$image.one({
 			load: function(e) {
@@ -82,7 +82,7 @@
 	 * @param {Object} options
 	 */
 	var loadData = function($element, options) {
-		$.ajax(options.res())
+		$.ajax(options.res($element))
 			.done(function(data) {
 				options.onLoad($element, data, options);
 			})
@@ -97,7 +97,7 @@
 	var updateOffset = function() {
 		for (var i = 0; i < lazyLoadList.length; i++) {
 			var item = lazyLoadList[i];
-			item && item[0].data('offset.lazy', item[1].offset());
+			item && item[0].data('offset.lazy', item[1].offset(item[0]));
 		}
 	};
 
@@ -109,7 +109,7 @@
 	 * @param {String} options.onLoad 加载成功回调
 	 * @param {String} options.onError 加载失败回调
 	 * @param {String|Function} options.res 要请求的资源
-	 * @param {Object|Function} [options.offset] 响应区域偏移范围
+	 * @param {Object|Function} [options.offset] 响应区域
 	 */
 	var lazyload = function($element, options) {
 		options || (options = {});
@@ -121,7 +121,7 @@
 				};
 			}
 			else {
-				options.offset = function() {
+				options.offset = function($element) {
 					return $element.offset();
 				};
 			}
@@ -134,7 +134,7 @@
 			};
 		}
 
-		$element.data('offset.lazy', options.offset());
+		$element.data('offset.lazy', options.offset($element));
 
 		options.onLoad || (options.onLoad = $.noop);
 		options.onError || (options.onError = $.noop);
