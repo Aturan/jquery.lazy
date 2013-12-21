@@ -147,6 +147,13 @@
 		}
 	};
 
+	var refresh = function() {
+		updateOffset();
+		setTimeout(function() {
+			$(window).trigger('scroll');
+		}, 10);
+	};
+
 	/**
 	 * @param {jQuery} $element
 	 * @param {Object} options
@@ -241,7 +248,7 @@
 
 	//初始化监听
 	$(window).on('scroll.__lazy', throttle(updateOffset, 1000));
-	$(window).on('scroll.__lazy', throttle(processor, 100));
+	$(window).on('scroll.__lazy', throttle(processor, 1));
 
 	$.fn.lazy = function(options) {
 		//注销
@@ -269,5 +276,9 @@
 			}, 100);
 		}
 		return this;
+	};
+
+	$.lazy = {
+		refresh: refresh
 	};
 })(JQuery);
