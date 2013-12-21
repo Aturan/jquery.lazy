@@ -1,5 +1,5 @@
 (function($) {
-  "use strict";
+	"use strict";
 
 	var lazyLoadList = [];
 
@@ -17,20 +17,26 @@
 					$element.removeData('offset.lazy');
 					options.once && (lazyLoadList[i] = null);
 					if (options.type == 'image') {
-						setTimeout(function() {
-							loadImage($element, options);
-						}, 0);
+						(function($element, options) {
+							setTimeout(function() {
+								loadImage($element, options);
+							}, 0);
+						})($element, options);
 					}
 					else if (options.type == 'url') {
-						setTimeout(function() {
-							loadData($element, options);
-						}, 0);
+						(function($element, options) {
+							setTimeout(function() {
+								loadData($element, options);
+							}, 0);
+						})($element, options);
 					}
 					else {
-						setTimeout(function() {
-							options.onLoad(options.res($element));
-							$(window).trigger('scroll.__lazy');
-						}, 0);
+						(function($element, options) {
+							setTimeout(function() {
+								options.onLoad(options.res($element));
+								$(window).trigger('scroll.__lazy');
+							}, 0);
+						})($element, options);
 					}
 				}
 			}
@@ -38,6 +44,20 @@
 
 			}
 		}
+
+		var iterator = function(array, func) {
+			var newArray = [];
+			for (var i = 0; i < lazyLoadList.length; i++) {
+				if (func(lazyLoadList[i], i, lazyLoadList)) {
+					newArray.push(lazyLoadList[i]);
+				}
+			}
+			return newArray;
+		};
+
+		lazyLoadList = iterator(lazyLoadList, function(value) {
+			return !!value;
+		});
 	};
 
 
@@ -74,7 +94,7 @@
 		else {
 			$image.trigger('error');
 		}
-	}
+	};
 
 	/**
 	 * @private
@@ -210,7 +230,7 @@
 			this.each(function() {
 				lazyload($(this), options);
 			});
-			$(window).trigger('scroll.__lazy');
+			$(window).trigger('scroll');
 		}
 		return this;
 	};
