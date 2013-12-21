@@ -241,13 +241,13 @@
 		var $window = $(window);
 		var top = $window.scrollTop();
 		return {
-			top: top,
-			bottom: top + $window.height()
+			top: top - $.lazy.sensitivity,
+			bottom: top + $window.height() + $.lazy.sensitivity
 		};
 	};
 
 	//初始化监听
-	$(window).on('scroll.__lazy', throttle(updateOffset, 1000));
+	$(window).on('scroll.__lazy', throttle(updateOffset, 100));
 	$(window).on('scroll.__lazy', throttle(processor, 1));
 
 	$.fn.lazy = function(options) {
@@ -279,6 +279,7 @@
 	};
 
 	$.lazy = {
-		refresh: refresh
+		refresh: refresh,
+		sensitivity: 50
 	};
 })(JQuery);
