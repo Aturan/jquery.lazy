@@ -252,14 +252,16 @@
 		}
 		//强制加载
 		else if (options == 'load') {
-			runTarget($(this));
+			this.each(function() {
+				runTarget($(this));
+			});
 		}
 		//lazyLoad
 		else {
 			this.each(function() {
 				var $this = $(this);
 				setTimeout(function() {
-					lazyload($this, options);
+					lazyload($this, $.extend(true, {}, options));
 				}, 0);
 			});
 			setTimeout(function() {
@@ -268,4 +270,4 @@
 		}
 		return this;
 	};
-})(jQuery);
+})(JQuery);
