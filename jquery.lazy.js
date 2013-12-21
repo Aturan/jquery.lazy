@@ -147,6 +147,11 @@
 			}
 		}
 
+		if (options.type == 'image') {
+			options.once = true;
+			options.res || (options.res = $element.data('src'));
+		}
+
 		if (!$.isFunction(options.res)) {
 			var res = options.res;
 			options.res = function() {
@@ -158,10 +163,6 @@
 
 		options.onLoad || (options.onLoad = function() {});
 		options.onError || (options.onError = function() {});
-
-		if (options.type == 'image') {
-			options.once = true;
-		}
 
 		lazyLoadList.push([$element, options]);
 	};
