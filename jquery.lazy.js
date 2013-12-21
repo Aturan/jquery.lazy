@@ -33,7 +33,7 @@
 					else {
 						(function($element, options) {
 							setTimeout(function() {
-								options.onLoad(options.res($element));
+								options.onLoad(options.res);
 								$(window).trigger('scroll.__lazy');
 							}, 0);
 						})($element, options);
@@ -67,7 +67,7 @@
 	 * @private
 	 */
 	var loadImage = function($image, options) {
-		var src = options.res($image);
+		var src = options.res;
 
 		$image.one({
 			load: function(e) {
@@ -102,7 +102,7 @@
 	 * @param {Object} options
 	 */
 	var loadData = function($element, options) {
-		$.ajax(options.res($element))
+		$.ajax(options.res)
 			.done(function(data) {
 				options.onLoad($element, data, options);
 			})
@@ -128,23 +128,15 @@
 	 * @param {Boolean} options.once 是否只执行一次
 	 * @param {String} options.onLoad 加载成功回调
 	 * @param {String} options.onError 加载失败回调
-	 * @param {String|Function} options.res 要请求的资源
-	 * @param {Object|Function} [options.offset] 响应区域
+	 * @param {Function} options.res 要请求的资源
+	 * @param {Function} [options.offset] 响应区域
 	 */
 	var lazyload = function($element, options) {
 		options || (options = {});
 		if (!$.isFunction(options.offset)) {
-			if (options.offset) {
-				var offset = options.offset;
-				options.offset = function() {
-					return offset;
-				};
-			}
-			else {
-				options.offset = function($element) {
-					return $element.offset();
-				};
-			}
+			options.offset = function($element) {
+				return $element.offset();
+			};
 		}
 
 		if (options.type == 'image') {
@@ -152,11 +144,8 @@
 			options.res || (options.res = $element.data('src'));
 		}
 
-		if (!$.isFunction(options.res)) {
-			var res = options.res;
-			options.res = function() {
-				return res;
-			};
+		if ($.isFunction(options.res)) {
+			options.res = options.res($element);
 		}
 
 		$element.data('offset.lazy', options.offset($element));
