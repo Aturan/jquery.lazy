@@ -12,39 +12,59 @@
 				var $element = item[0];
 				var options = item[1];
 				var offset = $element.data('offset.lazy');
+				var condition = options.condition($element, offset);
 
-				if (offset.top + $element.height() > area.top && offset.top < area.bottom) {
-					$element.removeData('offset.lazy');
-					options.once && (lazyLoadList[i] = null);
-					if (options.type == 'image') {
-						(function($element, options) {
-							setTimeout(function() {
-								loadImage($element, options);
-							}, 0);
-						})($element, options);
-					}
-					else if (options.type == 'url') {
-						(function($element, options) {
-							setTimeout(function() {
-								loadData($element, options);
-							}, 0);
-						})($element, options);
-					}
-					else {
-						(function($element, options) {
-							setTimeout(function() {
-								options.onLoad(options.res);
-								$(window).trigger('scroll.__lazy');
-							}, 0);
-						})($element, options);
-					}
+				if (condition && offset.top + $element.height() > area.top && offset.top < area.bottom) {
+					options.once && destroyBind($element);
+					_lazyLoad(item);
 				}
 			}
 			catch (e) {
 
 			}
 		}
+		removeLoaded();
+	};
 
+	var runTarget = function($element) {
+		for (var i = 0; i < lazyLoadList.length; i++) {
+			var curritem = lazyLoadList[i];
+			if (curritem && curritem[0].get(0) == $element.get(0)) {
+				curritem[1].once && destroyBind(curritem[0]);
+				_lazyLoad(curritem);
+				break;
+			}
+		}
+	};
+
+	var _lazyLoad = function(item) {
+		var $element = item[0];
+		var options = item[1];
+		if (options.type == 'image') {
+			(function($element, options) {
+				setTimeout(function() {
+					loadImage($element, options);
+				}, 0);
+			})($element, options);
+		}
+		else if (options.type == 'url') {
+			(function($element, options) {
+				setTimeout(function() {
+					loadData($element, options);
+				}, 0);
+			})($element, options);
+		}
+		else {
+			(function($element, options) {
+				setTimeout(function() {
+					options.onLoad(options.res, $element, options);
+					$(window).trigger('scroll');
+				}, 0);
+			})($element, options);
+		}
+	};
+
+	var removeLoaded = function() {
 		var iterator = function(array, func) {
 			var newArray = [];
 			for (var i = 0; i < lazyLoadList.length; i++) {
@@ -70,13 +90,15 @@
 		var src = options.res;
 
 		$image.one({
-			load: function(e) {
+			'load.__lazy': function(e) {
 				options.onLoad($image, options, e);
-				$(window).trigger('scroll.__lazy');
+				$(this).off('.lazy');
+				$(window).trigger('scroll');
 			},
-			error: function(e) {
+			'error.__lazy': function(e) {
 				options.onError($image, options, e);
-				$(window).trigger('scroll.__lazy');
+				$(this).off('.__lazy');
+				$(window).trigger('scroll');
 			}
 		});
 
@@ -104,20 +126,24 @@
 	var loadData = function($element, options) {
 		$.ajax(options.res)
 			.done(function(data) {
-				options.onLoad($element, data, options);
+				options.onLoad(data, $element, options);
 			})
 			.fail(function(jqXHR) {
-				options.onError($element, jqXHR, options);
+				options.onError(jqXHR, $element, options);
 			})
 			.always(function() {
-				$(window).trigger('scroll.__lazy');
+				$(window).trigger('scroll');
 			});
 	};
 
 	var updateOffset = function() {
 		for (var i = 0; i < lazyLoadList.length; i++) {
 			var item = lazyLoadList[i];
-			item && item[0].data('offset.lazy', item[1].offset(item[0]));
+			item && (function(item) {
+				setTimeout(function() {
+					item[0].data('offset.lazy', item[1].offset(item[0]));
+				}, 0);
+			})(item);
 		}
 	};
 
@@ -125,7 +151,8 @@
 	 * @param {jQuery} $element
 	 * @param {Object} options
 	 * @param {String} options.type 请求资源类型
-	 * @param {Boolean} options.once 是否只执行一次
+	 * @param {Boolean} options.once 是否只执行一次，对于type为image的，强制为true
+	 * @param {Function} options.condition 是否执行lazyLoad的条件判断，默认返回true
 	 * @param {String} options.onLoad 加载成功回调
 	 * @param {String} options.onError 加载失败回调
 	 * @param {Function} options.res 要请求的资源
@@ -138,6 +165,12 @@
 				return $element.offset();
 			};
 		}
+
+		if (options.type == undefined && $('img').get(0).tagName.toLowerCase() == 'img') {
+			options.type = 'image';
+		}
+
+		options.condition || (options.condition = function() {return true;});
 
 		if (options.type == 'image') {
 			options.once = true;
@@ -162,8 +195,9 @@
 		for (var i = 0; i < lazyLoadList.length; i++) {
 			var item = lazyLoadList[i];
 			if (item && item[0].get(0) == $element.get(0)) {
-				lazyLoadList.splice(i, 1);
-				return;
+				item[0].removeData('offset.lazy');
+				lazyLoadList[i] = null;
+				break;
 			}
 		}
 	};
@@ -209,18 +243,28 @@
 	$(window).on('scroll.__lazy', throttle(updateOffset, 1000));
 	$(window).on('scroll.__lazy', throttle(processor, 100));
 
-
 	$.fn.lazy = function(options) {
+		//注销
 		if (options === 'destroy') {
 			this.each(function() {
 				destroyBind($(this));
 			});
 		}
+		//强制加载
+		else if (options == 'load') {
+			runTarget($(this));
+		}
+		//lazyLoad
 		else {
 			this.each(function() {
-				lazyload($(this), options);
+				var $this = $(this);
+				setTimeout(function() {
+					lazyload($this, options);
+				}, 0);
 			});
-			$(window).trigger('scroll');
+			setTimeout(function() {
+				$(window).trigger('scroll');
+			}, 100);
 		}
 		return this;
 	};
