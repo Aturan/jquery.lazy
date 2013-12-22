@@ -282,4 +282,4 @@
 		refresh: refresh,
 		sensitivity: 50
 	};
-})(JQuery);
+})(jQuery);
