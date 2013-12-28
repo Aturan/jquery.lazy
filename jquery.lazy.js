@@ -10,6 +10,7 @@
 			try {
 				var item = lazyLoadList[i];
 				var $element = item[0];
+
 				var options = item[1];
 				var offset = $element.data('offset.lazy');
 				var condition = options.condition($element, offset);
