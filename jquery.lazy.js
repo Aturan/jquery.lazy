@@ -58,7 +58,7 @@
 		else {
 			(function($element, options) {
 				setTimeout(function() {
-					options.onLoad(options.res, $element, options);
+					options.onLoad(options.res($element), $element, options);
 					$(window).trigger('scroll');
 				}, 0);
 			})($element, options);
@@ -88,7 +88,7 @@
 	 * @private
 	 */
 	var loadImage = function($image, options) {
-		var src = options.res;
+		var src = options.res($image);
 
 		$image.one({
 			'load.__lazy': function(e) {
@@ -125,7 +125,7 @@
 	 * @param {Object} options
 	 */
 	var loadData = function($element, options) {
-		$.ajax(options.res)
+		$.ajax(options.res($element))
 			.done(function(data) {
 				options.onLoad(data, $element, options);
 			})
@@ -174,7 +174,7 @@
 			};
 		}
 
-		if (options.type == undefined && $('img').get(0).tagName.toLowerCase() == 'img') {
+		if ($element.get(0).tagName.toLowerCase() == 'img') {
 			options.type = 'image';
 		}
 
@@ -185,8 +185,11 @@
 			options.res || (options.res = $element.data('src'));
 		}
 
-		if ($.isFunction(options.res)) {
-			options.res = options.res($element);
+		if (!$.isFunction(options.res)) {
+			var res = options.res;
+			options.res = function() {
+				return res;
+			};
 		}
 
 		$element.data('offset.lazy', options.offset($element));
