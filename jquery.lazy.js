@@ -17,6 +17,7 @@
 
 				if (condition && offset.top + $element.height() > area.top && offset.top < area.bottom) {
 					options.once && destroyBind($element);
+					options.beforeLoad($element, options);
 					_lazyLoad(item);
 				}
 			}
@@ -161,6 +162,7 @@
 	 * @param {String} options.type 请求资源类型
 	 * @param {Boolean} options.once 是否只执行一次，对于type为image的，强制为true
 	 * @param {Function} options.condition 是否执行lazyLoad的条件判断，默认返回true
+	 * @param {String} options.beforeLoad 加载之前执行的回调
 	 * @param {String} options.onLoad 加载成功回调
 	 * @param {String} options.onError 加载失败回调
 	 * @param {Function} options.res 要请求的资源
@@ -194,6 +196,7 @@
 
 		$element.data('offset.lazy', options.offset($element));
 
+		options.beforeLoad || (options.beforeLoad = function() {});
 		options.onLoad || (options.onLoad = function() {});
 		options.onError || (options.onError = function() {});
 
