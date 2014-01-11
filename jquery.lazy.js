@@ -13,7 +13,7 @@
 
 				var options = item[1];
 				var offset = $element.data('offset.lazy');
-				var condition = options.condition($element, offset);
+				var condition = options.condition($element, offset) && (options.top != 0 || offset.left != 0);
 
 				if (condition && offset.top + $element.height() > area.top && offset.top < area.bottom) {
 					options.once && destroyBind($element);
