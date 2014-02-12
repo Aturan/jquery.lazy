@@ -59,7 +59,7 @@
 		else {
 			(function($element, options) {
 				setTimeout(function() {
-					options.onLoad(options.res($element), $element, options);
+					options.onLoad.call($element, options.res($element), options);
 					$(window).trigger('scroll');
 				}, 0);
 			})($element, options);
@@ -93,12 +93,12 @@
 
 		$image.one({
 			'load.__lazy': function(e) {
-				options.onLoad($image, options, e);
+				options.onLoad.call($image, e, options);
 				$(this).off('.lazy');
 				$(window).trigger('scroll');
 			},
 			'error.__lazy': function(e) {
-				options.onError($image, options, e);
+				options.onError.call($image, e, options);
 				$(this).off('.__lazy');
 				$(window).trigger('scroll');
 			}
@@ -128,10 +128,10 @@
 	var loadData = function($element, options) {
 		$.ajax(options.res($element))
 			.done(function(data) {
-				options.onLoad(data, $element, options);
+				options.onLoad.call($element, data, options);
 			})
 			.fail(function(jqXHR) {
-				options.onError(jqXHR, $element, options);
+				options.onError.call($element, jqXHR, options);
 			})
 			.always(function() {
 				$(window).trigger('scroll');
