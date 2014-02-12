@@ -1,12 +1,31 @@
 {
-	"name": "jquery.lazy",
-	"version": "1.0.0",
-	"main": "jquery.lazy.js",
-	"devDependencies": {
-		"grunt": "~0.4.1",
-		"grunt-contrib-uglify": "~0.2.0"
-	},
-	"peerDependencies": {
-		"grunt": "~0.4.1"
-	}
+  "name": "jquery.lazy",
+  "version": "1.0.0",
+  "description": "A lazy load data for jQuery plugin",
+  "keywords": [],
+  "homepage": "https://github.com/Aturan/jquery.lazy",
+  "author": "Aturan",
+  "maintainers": [
+    "Aturan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aturan/jquery.lazy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aturan/jquery.lazy/issues"
+  },
+  "licenses": "MIT",
+  "spm": {
+    "main": "index.js",
+    "dependencies": {
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    },
+    "engines": {
+      "seajs": "2.2.1"
+    },
+    "tests": "tests/*.js"
+  }
 }
