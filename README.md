@@ -19,19 +19,21 @@ $ spm install jquery.lazy --save
 ```js
 require('easing');
 
-$('#demo').lazy({
-        width: 'toggle',
-        height: 'toggle'
-    }, {
-    duration: 5000,
-    specialEasing: {
-        width: 'linear',
-        height: 'elasticBoth' // 直接使用扩展的平滑函数名就好
-    },
-    complete: function() {
-        $(this).after('<div>Animation complete.</div>');
-    }
+//绑定lazyload
+$('img').lazy({
+	type: 'toggle',
+	once: true,
+	beforeLoad: before,
+	onLoad: success,
+	onError: error
 });
+
+// 强制加载
+$('img.lazyload').lazy('load');
+
+// 卸载lazyload绑定
+$('img').lazy('destroy');
+
 ```
 
 ## Api
