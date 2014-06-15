@@ -2,7 +2,7 @@
   "name": "jquery.lazy",
   "version": "1.0.0",
   "description": "A lazy load data for jQuery plugin",
-  "keywords": [],
+  "keywords": ["jquery", "lazyload"],
   "homepage": "https://github.com/Aturan/jquery.lazy",
   "author": "Aturan",
   "maintainers": [
@@ -19,13 +19,11 @@
   "spm": {
     "main": "index.js",
     "dependencies": {
+      "jquery": "2.1.0"
     },
     "devDependencies": {
       "expect.js": "0.3.1"
     },
-    "engines": {
-      "seajs": "2.2.1"
-    },
-    "tests": "tests/*.js"
+	  "buildArgs": "--ignore jquery"
   }
 }

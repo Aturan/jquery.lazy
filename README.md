@@ -17,9 +17,28 @@ $ spm install jquery.lazy --save
 ## Usage
 
 ```js
-var jquery.lazy = require('jquery.lazy');
-// use jquery.lazy
+require('easing');
+
+$('#demo').lazy({
+        width: 'toggle',
+        height: 'toggle'
+    }, {
+    duration: 5000,
+    specialEasing: {
+        width: 'linear',
+        height: 'elasticBoth' // 直接使用扩展的平滑函数名就好
+    },
+    complete: function() {
+        $(this).after('<div>Animation complete.</div>');
+    }
+});
 ```
 
 ## Api
+
+### $.lazy.refresh
+`Function`
+
+### $.lazy.sensitivity
+`options`
 

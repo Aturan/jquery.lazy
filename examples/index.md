@@ -5,7 +5,7 @@
 ## Normal usage
 
 ````javascript
-seajs.use('index', function(jquery.lazy) {
-
+define(function(require) {
+	require('jquery.lazy');
 });
 ````

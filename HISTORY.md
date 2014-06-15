@@ -4,4 +4,4 @@
 
 ## 1.0.0
 
-`new` It is the first version of jquery.lazy.
+升级到 spm@3.x 规范。
