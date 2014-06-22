@@ -17,7 +17,7 @@ $ spm install jquery.lazy --save
 ## Usage
 
 ```js
-require('easing');
+require('jquery.lazy');
 
 //绑定lazyload
 $('img').lazy({
