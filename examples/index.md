@@ -7,5 +7,6 @@
 ````javascript
 define(function(require) {
 	require('jquery.lazy');
+	$('img').lazy();
 });
 ````
